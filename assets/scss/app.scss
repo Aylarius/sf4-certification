@@ -1,0 +1,60 @@
+@import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/css/all";
+
+
+body {
+    background-color: white;
+    font-size: 16px;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: white;
+
+    #welcome {
+        padding: 1rem 2rem;
+    }
+    .navbar {
+        padding: 0;
+
+        .navbar-nav {
+            flex: 1;
+            min-height: 4rem;
+            background-color: #0D4F6A;
+            box-shadow: 0 0.2rem 1rem 0.1rem rgba(0,0,0,.2);
+            align-items: center;
+            justify-content: center;
+
+            a {
+                color: white;
+                padding: .5rem 1rem;
+                display: block;
+                &:active {
+                    color: white;
+                }
+            }
+        }
+        .navbar-toggler-icon {
+            color: black;
+        }
+    }
+}
+
+main {
+    width: 80%;
+    margin: auto;
+    padding: 1rem 2.5rem;
+    background-color: #F2F2F2;
+    box-shadow: 0 0.2rem 1rem 0.1rem rgba(0,0,0,.2);
+    margin-bottom: 4rem;
+
+    .card-wrapper {
+        padding: .5rem;
+
+        .card {
+            padding: 0;
+        }
+    }
+}
