@@ -1,0 +1,94 @@
+easy_admin:
+    site_name: 'Super Admin'
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+    design:
+        brand_color: '#0D4F6A'
+        color_scheme: 'light'
+#        assets:
+#            css:
+#                # HTTP protocol-relative URL
+#                - '//example.org/css/admin1.css'
+#                # absolute non-secure URL
+#                - 'http://example.org/css/admin2.css'
+#                # absolute secure URL
+#                - 'https://example.org/css/admin3.css'
+#                # absolute internal bundle URL
+#                - '/bundles/user/css/admin4.css'
+#                # relative internal bundle URL
+#                - 'bundles/app/css/admin5.css'
+#            js:
+#                # this option works exactly the same as the 'css' option
+#                - '//example.org/js/admin1.js'
+#                - 'http://example.org/js/admin2.js'
+#                - 'https://example.org/js/admin3.js'
+#                - '/bundles/user/js/admin4.js'
+#                - 'bundles/app/js/admin5.js'
+#            favicon: '/assets/backend/favicon.png'
+
+    entities:
+        Resource:
+            class: App\Entity\Resource
+            help: 'Global message displayed in all views'
+            label: 'Resources'
+            list:
+                title: "%%entity_label%% list"
+                help: 'The list view overrides the global help message'
+                max_results: 30
+                fields: ['id', 'title', 'category', 'published', 'draft', { property: 'isDeleted', type: boolean }, 'createdAt', 'updatedAt']
+#                fields: ['id', 'name', 'age', 'user.email', 'user.phone', { property: 'email', label: 'Contact' }]
+                sort: ['createdAt', 'ASC']
+            show:
+                title: "%%entity_label%% n°%%entity_id%%"
+            search:
+                # use an array to also define the sorting direction
+                sort: ['createdAt', 'ASC']
+            form:
+                title:  'Add a resource'
+                fields: ['title', 'category', 'content', 'learnMore', 'tags', 'published', 'draft']
+            edit:
+                title:  'Edit resource n°%%entity_id%%'
+
+        Category:
+            class: App\Entity\Category
+            help: 'Global message displayed in all views'
+            label: 'Categories'
+            list:
+                title: "%%entity_label%% list"
+                help: 'The list view overrides the global help message'
+                max_results: 30
+                fields: ['id', 'title']
+                sort: ['id', 'ASC']
+            show:
+                title: "%%entity_label%% n°%%entity_id%%"
+            search:
+                sort: ['title', 'ASC']
+            form:
+                title:  'Add a category'
+                fields: ['title']
+            edit:
+                title:  'Edit category n°%%entity_id%%'
+
+        Tag:
+            class: App\Entity\Tag
+            help: 'Global message displayed in all views'
+            label: 'Tags'
+            list:
+                title: "%%entity_label%% list"
+                help: 'The list view overrides the global help message'
+                max_results: 30
+                fields: ['id', 'title']
+                sort: ['id', 'ASC']
+            show:
+                title: "%%entity_label%% n°%%entity_id%%"
+                fields: ['id', 'title', 'resources']
+            search:
+                # use an array to also define the sorting direction
+                sort: ['title', 'ASC']
+            form:
+                title:  'Add a tag'
+                fields: ['title', 'resources']
+            edit:
+                title:  'Edit tag n°%%entity_id%%'
