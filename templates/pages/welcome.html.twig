@@ -1,5 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-Salut les gens
+    <main class="text-center">
+        <h2>Hey Salut !</h2>
+
+        <div class="card-container col-xs-12">
+            <div class="row">
+                {% for post in posts %}
+                    <div class="card-wrapper col-xs-12 col-md-6">
+                        {% include 'posts/thumbnail.html.twig' %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
 {% endblock %}

@@ -13,6 +13,11 @@ class DefaultController extends Controller {
      * @return Response
      */
     public function index() {
-        return $this->render('pages/welcome.html.twig');
+
+        $em = $this->getDoctrine()->getManager();
+        $posts = $em->getRepository('App\Entity\Resource')->findAll();
+        return $this->render('pages/welcome.html.twig', array(
+            'posts' => $posts
+        ));
     }
 }

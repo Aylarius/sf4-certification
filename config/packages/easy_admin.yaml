@@ -47,7 +47,7 @@ easy_admin:
                 sort: ['createdAt', 'ASC']
             form:
                 title:  'Add a resource'
-                fields: ['title', 'category', 'content', 'learnMore', 'tags', 'published', 'draft']
+                fields: ['title', 'category', { property: 'content', type: 'FOS\CKEditorBundle\Form\Type\CKEditorType'}, 'learnMore', 'tags', 'published', 'draft']
             edit:
                 title:  'Edit resource n°%%entity_id%%'
 
