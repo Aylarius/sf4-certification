@@ -1,0 +1,3 @@
+{% for category in categories %}
+    <a href="{{ path('resources_by_category', {'slug': category.slug }) }}" target="_self">{{ category.title }}</a>
+{% endfor %}

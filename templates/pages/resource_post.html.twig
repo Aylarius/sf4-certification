@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="card blog-post">
+            <strong class="d-inline-block mb-2 text-success"> <a href="{{ path('resources_by_category', {'slug': post.category.slug }) }}" target="_self">{{ post.category }}</a></strong>
+            <h2 class="blog-post-title">{{ post.title }}</h2>
+            <p class="blog-post-meta">{{ post.createdAt|date("F jS Y	\\a\\t g:i A") }}</p>
+            <hr>
+            <p class="card-text mb-auto">{{ post.content }}</p>
+        </div>
+    </main>
+{% endblock %}
+
+
