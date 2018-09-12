@@ -2,7 +2,8 @@
 
 namespace App\Security;
 
-use Sensio\Bundle\FrameworkExtraBundle\Tests\Request\ParamConverter\TestUserRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -10,17 +11,20 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
-    private $testUserRepository;
-
+    private $userRepository;
     private $router;
+    private $passwordEncoder;
 
-    public function __construct(TestUserRepository $testUserRepository, RouterInterface $router)
+    public function __construct(UserRepository $userRepository, RouterInterface $router, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $this->testUserRepository = $testUserRepository;
+        $this->userRepository = $userRepository;
         $this->router = $router;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function supports(Request $request)
@@ -28,28 +32,33 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $request->attributes->get('_route') === 'login' && $request->isMethod('POST');
     }
 
-    public function getCredentials(Request $request)
+    public function getCredentials(Request $request) : array
     {
-        return array('email' => $request->request->get('email'), 'password' => $request->request->get('password'));
+        return array('username' => $request->request->get('_username'), 'password' => $request->request->get('_password'));
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider) : User
     {
-        return $this->testUserRepository->findOneBy(array('email' => $credentials['email']));
+        return $this->userRepository->findOneBy(array('username' => $credentials['username']));
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user) : bool
     {
-        return true;
+        $password = $credentials['password'];
+
+        if ($this->passwordEncoder->isPasswordValid($user, $password)) {
+            return true;
+        }
+        return false;
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) : RedirectResponse
     {
-        new RedirectResponse($this->router->generate('homepage'));
+        return new RedirectResponse($this->router->generate('homepage'));
     }
 
-    public function getLoginUrl()
+    public function getLoginUrl() : string
     {
-        new RedirectResponse($this->router->generate('login'));
+        return $this->router->generate('login');
     }
 }

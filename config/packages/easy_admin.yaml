@@ -1,5 +1,5 @@
 easy_admin:
-    site_name: 'Super Admin'
+    site_name: 'SF Certification'
     formats:
         date:     'd/m/Y'
         time:     'H:i'

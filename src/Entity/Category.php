@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="category")
+ * @UniqueEntity(fields={"title"}, message="It looks like this category already exists!")
  */
 class Category
 {
@@ -44,7 +45,7 @@ class Category
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
 
     public function __toString() : ?string
